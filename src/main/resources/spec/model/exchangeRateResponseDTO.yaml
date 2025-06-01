@@ -1,0 +1,13 @@
+ExchangeRateResponseDTO:
+  type: object
+  properties:
+    timestamp:
+      type: integer
+      format: int64
+    source:
+      type: string
+    target:
+      type: string
+    exchangeRate:
+      type: number
+      format: decimal

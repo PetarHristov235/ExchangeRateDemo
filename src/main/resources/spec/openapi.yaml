@@ -4,4 +4,8 @@ info:
   description: Title
   version: 1.0.0
 tags:
+  - name: exchangeRate
+    description: Endpoints for retrieving current exchange rates
 paths:
+  /api/v1/exchange-rate:
+    $ref: './api/exchange-rate.yaml'
