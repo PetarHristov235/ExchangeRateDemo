@@ -1,25 +1,26 @@
 package com.zetta.currencyexchange.model;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 import java.util.Map;
 
 @Data
+@EqualsAndHashCode
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ExchangeRateResponse {
-    private boolean success;
-    private long timestamp;
-    private String source;
-    private Map<String, BigDecimal> quotes;
-    private Error error;
+    boolean success;
+    long timestamp;
+    String source;
+    Map<String, BigDecimal> quotes;
+    Error error;
 
     @Getter
     @Setter
     public static class Error {
-        private int code;
-        private String info;
+        int code;
+        String info;
 
     }
 }
