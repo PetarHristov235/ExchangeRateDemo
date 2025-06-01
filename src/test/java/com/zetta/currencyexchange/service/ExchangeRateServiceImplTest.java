@@ -1,0 +1,86 @@
+package com.zetta.currencyexchange.service;
+
+import com.zetta.currencyexchange.exception.ExchangeRateException;
+import com.zetta.currencyexchange.mapper.ExchangeRateResponseMapper;
+import com.zetta.currencyexchange.model.ExchangeRateResponse;
+import com.zetta.currencyexchange.model.ExchangeRateResponseDTO;
+import com.zetta.currencyexchange.util.UriCreateUtil;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.*;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.web.client.RestTemplate;
+
+import java.net.URI;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(org.mockito.junit.jupiter.MockitoExtension.class)
+class ExchangeRateServiceImplTest {
+
+    @Mock
+    RestTemplate restTemplate;
+
+    @Mock
+    ExchangeRateResponseMapper exchangeRateResponseMapper;
+
+    @InjectMocks
+    private ExchangeRateServiceImpl exchangeRateService;
+
+    private static final String API_URL = "http://apilayer.net/api";
+    private static final String ACCESS_KEY = "f8d9cdca86979931d56c1b92a6edc586";
+
+    @BeforeEach
+    void setUp() {
+        ReflectionTestUtils.setField(exchangeRateService, "apiLayerUrl", API_URL);
+        ReflectionTestUtils.setField(exchangeRateService, "accessKey", ACCESS_KEY);
+    }
+
+    @Test
+    void exchangeRates_returnsMappedDTO_whenResponseIsOk() {
+        String from = "EUR";
+        String to = "USD";
+        URI uri = URI.create("http://api/live?access_key=key&source=EUR&currencies=USD");
+        ExchangeRateResponse response = new ExchangeRateResponse();
+        ExchangeRateResponseDTO dto = new ExchangeRateResponseDTO();
+
+        try (MockedStatic<UriCreateUtil> mockedStatic = Mockito.mockStatic(UriCreateUtil.class)) {
+            mockedStatic.when(() -> UriCreateUtil.createExchangeUri(anyString(), anyString(), anyString(), anyString()))
+                    .thenReturn(uri);
+
+            when(restTemplate.getForEntity(uri, ExchangeRateResponse.class))
+                    .thenReturn(new ResponseEntity<>(response, HttpStatus.OK));
+            when(exchangeRateResponseMapper.toDto(response, from, to)).thenReturn(dto);
+
+            ExchangeRateResponseDTO result = exchangeRateService.exchangeRates(from, to);
+
+            assertThat(result).isEqualTo(dto);
+        }
+    }
+
+    @Test
+    void exchangeRates_throwsException_whenResponseNotOk() {
+        String from = "EUR";
+        String to = "USD";
+        URI uri = URI.create("http://api/live?access_key=key&source=EUR&currencies=USD");
+
+        try (MockedStatic<UriCreateUtil> mockedStatic = Mockito.mockStatic(UriCreateUtil.class)) {
+            mockedStatic.when(() -> UriCreateUtil.createExchangeUri(anyString(), anyString(), anyString(), anyString()))
+                    .thenReturn(uri);
+
+            when(restTemplate.getForEntity(uri, ExchangeRateResponse.class))
+                    .thenReturn(new ResponseEntity<>(null, HttpStatus.BAD_REQUEST));
+
+            assertThatThrownBy(() -> exchangeRateService.exchangeRates(from, to))
+                    .isInstanceOf(ExchangeRateException.class);
+        }
+    }
+}
