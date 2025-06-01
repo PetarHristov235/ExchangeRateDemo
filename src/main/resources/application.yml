@@ -15,5 +15,5 @@ spring:
   application:
    name: "ExchangeRateDemo"
 apiLayer:
-  url: "http://apilayer.net/api/live"
+  url: "http://apilayer.net/api"
   access-key: "f8d9cdca86979931d56c1b92a6edc586"
