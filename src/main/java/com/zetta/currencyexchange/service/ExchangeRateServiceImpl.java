@@ -64,7 +64,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
             ExchangeRateResponse.Error error = exchangeRateResponseEntity.getBody().getError();
             log.error("An error occurred when fetching the exchange rates with error code {} and description {}",
                     error.getCode(), error.getInfo());
-            ApiErrorStrategyContext.handleError(error.getCode());
+            ApiErrorStrategyContext.handleError(error.getCode(), exchangeRateUrl);
         }
 
         return exchangeRateResponseMapper.toDto(exchangeRateResponseEntity.getBody(), from, to);

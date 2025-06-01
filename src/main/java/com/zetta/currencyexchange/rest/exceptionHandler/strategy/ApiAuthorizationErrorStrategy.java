@@ -5,9 +5,10 @@ import com.zetta.currencyexchange.exception.InternalServerErrorException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class DefaultErrorStrategy implements ApiErrorStrategy {
+public class ApiAuthorizationErrorStrategy implements ApiErrorStrategy {
     @Override
     public void handle(int errorCode) {
-        throw new InternalServerErrorException(RestApiErrorEnum.IE_500.getDescription(), RestApiErrorEnum.IE_500.getCode());
+        throw new InternalServerErrorException(RestApiErrorEnum.ER_500.getDescription(),
+                RestApiErrorEnum.ER_500.getCode());
     }
 }
