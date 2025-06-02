@@ -8,13 +8,19 @@ import com.zetta.currencyexchange.model.ExchangeRateResponseDTO;
 import com.zetta.currencyexchange.util.UriCreateUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -25,25 +31,44 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(org.mockito.junit.jupiter.MockitoExtension.class)
-class ExchangeRateServiceImplTest {
+@SpringBootTest
+@EnableCaching
+class ExchangeRateServiceImplCacheTest {
 
-    @Mock
+    @TestConfiguration
+    static class CacheTestConfig {
+        @Bean
+        public CacheManager cacheManager() {
+            return new CaffeineCacheManager();
+        }
+    }
+
+    @Autowired
+    @InjectMocks
+    ExchangeRateServiceImpl exchangeRateService;
+
+    @MockitoBean
     RestTemplate restTemplate;
 
-    @Mock
+    @MockitoBean
     ExchangeRateResponseMapper exchangeRateResponseMapper;
 
-    @InjectMocks
-    private ExchangeRateServiceImpl exchangeRateService;
+    @Autowired
+    CacheManager cacheManager;
 
-    private static final String API_URL = "http://apilayer.net/api";
+    private static final String API_URL = "https://apilayer.net/api";
     private static final String ACCESS_KEY = "f8d9cdca86979931d56c1b92a6edc586";
 
     @BeforeEach
     void setUp() {
         ReflectionTestUtils.setField(exchangeRateService, "apiLayerUrl", API_URL);
         ReflectionTestUtils.setField(exchangeRateService, "accessKey", ACCESS_KEY);
+
+        cacheManager.getCacheNames().forEach(name -> {
+            if (cacheManager.getCache(name) != null) {
+                cacheManager.getCache(name).clear();
+            }
+        });
     }
 
     @Test
@@ -134,5 +159,26 @@ class ExchangeRateServiceImplTest {
                     .isInstanceOf(InternalServerErrorException.class)
                     .hasMessage(RestApiErrorEnum.IE_500.getDescription());
         }
+    }
+
+    @Test
+    void exchangeRates_shouldUseCache() {
+        String from = "EUR";
+        String to = "USD";
+        ExchangeRateResponse response = new ExchangeRateResponse();
+        ExchangeRateResponseDTO dto = new ExchangeRateResponseDTO();
+
+        when(restTemplate.getForEntity(any(), eq(ExchangeRateResponse.class)))
+                .thenReturn(ResponseEntity.ok(response));
+        when(exchangeRateResponseMapper.toDto(response, from, to)).thenReturn(dto);
+
+        // First call: should invoke dependencies
+        ExchangeRateResponseDTO result1 = exchangeRateService.exchangeRates(from, to);
+        // Second call: should hit cache, not invoke dependencies again
+        ExchangeRateResponseDTO result2 = exchangeRateService.exchangeRates(from, to);
+
+        assertThat(result1).isSameAs(result2);
+        verify(restTemplate, times(1)).getForEntity(any(), eq(ExchangeRateResponse.class));
+        verify(exchangeRateResponseMapper, times(1)).toDto(response, from, to);
     }
 }
