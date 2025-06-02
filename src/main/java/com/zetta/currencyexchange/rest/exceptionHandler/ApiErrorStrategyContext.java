@@ -1,6 +1,5 @@
 package com.zetta.currencyexchange.rest.exceptionHandler;
 
-import com.zetta.currencyexchange.enums.RestApiErrorEnum;
 import com.zetta.currencyexchange.rest.exceptionHandler.strategy.*;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +25,8 @@ public class ApiErrorStrategyContext {
 //        No Content
         strategyMap.put(106, new ApiNoContentErrorStrategy());
 
+//          Invalid source currency
+        strategyMap.put(201, new ApiInvalidSourceCurrencyErrorStrategy());
     }
 
     public void handleError(int errorCode, String urlInvoked) {

@@ -12,8 +12,8 @@ public enum RestApiErrorEnum {
     IE_124(124, "An internal error occurred. Please contact the support team."),
     IE_500(2342, """
             An internal error occurred"""),
-    ER_204(204, "The request was valid, but the query returned no data.");
-
+    ER_204(204, "The request was valid, but the query returned no data."),
+    ER_312(312, "Invalid Source Currency provided");
     private final int code;
     private final String description;
 

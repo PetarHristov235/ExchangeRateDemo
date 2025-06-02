@@ -1,6 +1,7 @@
 package com.zetta.currencyexchange.rest.exceptionHandler;
 
 import com.zetta.currencyexchange.enums.RestApiErrorEnum;
+import com.zetta.currencyexchange.exception.BadRequestException;
 import com.zetta.currencyexchange.exception.InternalServerErrorException;
 import com.zetta.currencyexchange.exception.NoContentException;
 import org.junit.jupiter.api.Test;
@@ -52,6 +53,21 @@ class ApiErrorStrategyContextTest {
 
         assertEquals(RestApiErrorEnum.ER_204.getDescription(), noContentException.getMessage());
         assertEquals(expectedCode, noContentException.getErrorCode());
+    }
+
+    @Test
+    void testHandleErrorForInvalidSourceCurrency() {
+        // Act & Assert
+        int expectedCode = 201;
+        BadRequestException badRequestException = assertThrows(BadRequestException.class,
+                () -> ApiErrorStrategyContext.handleError(expectedCode,
+                        "https" +
+                                "://test-api.com"));
+
+        assertEquals(RestApiErrorEnum.ER_312.getDescription(),
+                badRequestException.getMessage());
+        assertEquals(expectedCode,
+                badRequestException.getErrorCode());
     }
 
     @Test
