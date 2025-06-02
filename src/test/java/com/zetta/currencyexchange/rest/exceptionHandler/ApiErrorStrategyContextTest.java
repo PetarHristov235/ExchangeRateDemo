@@ -70,6 +70,22 @@ class ApiErrorStrategyContextTest {
                 badRequestException.getErrorCode());
     }
 
+
+    @Test
+    void testHandleErrorForInvalidCurrencyCodes() {
+        // Act & Assert
+        int expectedCode = 202;
+        BadRequestException badRequestException = assertThrows(BadRequestException.class,
+                () -> ApiErrorStrategyContext.handleError(expectedCode,
+                        "https" +
+                                "://test-api.com"));
+
+        assertEquals(RestApiErrorEnum.ER_313.getDescription(),
+                badRequestException.getMessage());
+        assertEquals(expectedCode,
+                badRequestException.getErrorCode());
+    }
+
     @Test
     void testHandleErrorForInvalidCode() {
 

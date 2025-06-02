@@ -27,6 +27,7 @@ public class ApiErrorStrategyContext {
 
 //          Invalid source currency
         strategyMap.put(201, new ApiInvalidSourceCurrencyErrorStrategy());
+        strategyMap.put(202, new ApiInvalidCurrencyCodesErrorStrategy());
     }
 
     public void handleError(int errorCode, String urlInvoked) {
