@@ -11,31 +11,48 @@ class ApiErrorStrategyContextTest {
 
     @Test
     void testHandleErrorFor101() {
+        int expectedCode = 101;
         // Act & Assert
         InternalServerErrorException internalServerErrorException = assertThrows(InternalServerErrorException.class,
-                () -> ApiErrorStrategyContext.handleError(101, "https://test-api.com"));
+                () -> ApiErrorStrategyContext.handleError(expectedCode, "https://test-api.com"));
 
         assertEquals(RestApiErrorEnum.ER_500.getDescription(), internalServerErrorException.getMessage());
-        assertEquals(RestApiErrorEnum.ER_500.getCode(), internalServerErrorException.getErrorCode());
+        assertEquals(expectedCode, internalServerErrorException.getErrorCode());
     }
 
     @Test
     void testHandleErrorFor102() {
         // Act & Assert
+        int expectedCode = 102;
         InternalServerErrorException internalServerErrorException = assertThrows(InternalServerErrorException.class,
-                () -> ApiErrorStrategyContext.handleError(102, "https://test-api.com"));
+                () -> ApiErrorStrategyContext.handleError(expectedCode, "https://test-api.com"));
 
         assertEquals(RestApiErrorEnum.ER_500.getDescription(), internalServerErrorException.getMessage());
-        assertEquals(RestApiErrorEnum.ER_500.getCode(), internalServerErrorException.getErrorCode());
+        assertEquals(expectedCode, internalServerErrorException.getErrorCode());
+    }
+
+    @Test
+    void testHandleErrorFor104() {
+        // Act & Assert
+        int expectedCode = 105;
+        InternalServerErrorException internalServerErrorException = assertThrows(InternalServerErrorException.class,
+                () -> ApiErrorStrategyContext.handleError(expectedCode, "https://test-api.com"));
+
+        assertEquals(RestApiErrorEnum.ER_500.getDescription(), internalServerErrorException.getMessage());
+        assertEquals(expectedCode, internalServerErrorException.getErrorCode());
     }
 
     @Test
     void testHandleErrorForInvalidCode() {
+
         // Act & Assert
         InternalServerErrorException internalServerErrorException = assertThrows(InternalServerErrorException.class,
-                () -> ApiErrorStrategyContext.handleError(999, "https://test-api.com"));
+                () -> ApiErrorStrategyContext.handleError(RestApiErrorEnum.IE_124.getCode(), "https" +
+                        "://test-api.com"));
 
-        assertEquals(RestApiErrorEnum.IE_500.getDescription(), internalServerErrorException.getMessage());
-        assertEquals(RestApiErrorEnum.IE_500.getCode(), internalServerErrorException.getErrorCode());
+        assertEquals(RestApiErrorEnum.IE_500.getDescription(),
+                internalServerErrorException.getMessage());
+        assertEquals(RestApiErrorEnum.IE_500.getCode(),
+                internalServerErrorException.getErrorCode());
     }
 }
