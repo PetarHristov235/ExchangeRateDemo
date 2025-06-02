@@ -12,6 +12,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
@@ -40,6 +41,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
     static String EXCHANGE_RATE_ENDPOINT_SUFFIX = "/live";
 
     @Override
+    @Cacheable(value = "exchangeRates", key = "#from.concat('-').concat(#to)", unless = "#result == null")
     public ExchangeRateResponseDTO exchangeRates(String from, String to) {
         String exchangeRateUrl = apiLayerUrl.concat(EXCHANGE_RATE_ENDPOINT_SUFFIX);
         log.info("Starting exchange rate operation: from='{}', to='{}', uri='{}'",
