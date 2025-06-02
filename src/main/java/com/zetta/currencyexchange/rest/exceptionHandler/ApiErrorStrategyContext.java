@@ -1,7 +1,9 @@
 package com.zetta.currencyexchange.rest.exceptionHandler;
 
+import com.zetta.currencyexchange.enums.RestApiErrorEnum;
 import com.zetta.currencyexchange.rest.exceptionHandler.strategy.ApiAuthorizationErrorStrategy;
 import com.zetta.currencyexchange.rest.exceptionHandler.strategy.ApiErrorStrategy;
+import com.zetta.currencyexchange.rest.exceptionHandler.strategy.ApiNonExistentFunctionStrategy;
 import com.zetta.currencyexchange.rest.exceptionHandler.strategy.DefaultErrorStrategy;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -15,8 +17,16 @@ public class ApiErrorStrategyContext {
     private static final Map<Integer, ApiErrorStrategy> strategyMap = new HashMap<>();
 
     static {
+//        Authorization errors
         strategyMap.put(101, new ApiAuthorizationErrorStrategy());
         strategyMap.put(102, new ApiAuthorizationErrorStrategy());
+        strategyMap.put(104, new ApiAuthorizationErrorStrategy());
+        strategyMap.put(105, new ApiAuthorizationErrorStrategy());
+
+//        Non-existing external API function
+        strategyMap.put(103, new ApiNonExistentFunctionStrategy());
+
+
     }
 
     public void handleError(int errorCode, String urlInvoked) {
