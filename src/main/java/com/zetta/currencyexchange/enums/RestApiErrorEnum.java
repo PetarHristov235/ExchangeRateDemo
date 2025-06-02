@@ -11,7 +11,8 @@ public enum RestApiErrorEnum {
             If the issue persists, please contact the support team."""),
     IE_124(124, "An internal error occurred. Please contact the support team."),
     IE_500(2342, """
-            An internal error occurred""");
+            An internal error occurred"""),
+    ER_204(204, "The request was valid, but the query returned no data.");
 
     private final int code;
     private final String description;

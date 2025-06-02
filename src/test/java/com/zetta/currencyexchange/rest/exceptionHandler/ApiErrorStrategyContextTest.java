@@ -2,6 +2,7 @@ package com.zetta.currencyexchange.rest.exceptionHandler;
 
 import com.zetta.currencyexchange.enums.RestApiErrorEnum;
 import com.zetta.currencyexchange.exception.InternalServerErrorException;
+import com.zetta.currencyexchange.exception.NoContentException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,6 +41,17 @@ class ApiErrorStrategyContextTest {
 
         assertEquals(RestApiErrorEnum.ER_500.getDescription(), internalServerErrorException.getMessage());
         assertEquals(expectedCode, internalServerErrorException.getErrorCode());
+    }
+
+    @Test
+    void testHandleErrorFor106() {
+        // Act & Assert
+        int expectedCode = 106;
+        NoContentException noContentException = assertThrows(NoContentException.class,
+                () -> ApiErrorStrategyContext.handleError(expectedCode, "https://test-api.com"));
+
+        assertEquals(RestApiErrorEnum.ER_204.getDescription(), noContentException.getMessage());
+        assertEquals(expectedCode, noContentException.getErrorCode());
     }
 
     @Test
