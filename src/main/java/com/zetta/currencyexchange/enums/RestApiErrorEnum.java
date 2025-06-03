@@ -14,7 +14,8 @@ public enum RestApiErrorEnum {
             An internal error occurred"""),
     ER_204(204, "The request was valid, but the query returned no data."),
     ER_312(312, "Invalid Source Currency provided"),
-    ER_313(313," Invalid one or more currency codes provided");
+    ER_313(313," Invalid one or more currency codes provided"),
+    CH_400(400, "The request was invalid. Please check the request parameters and try again.");
     private final int code;
     private final String description;
 

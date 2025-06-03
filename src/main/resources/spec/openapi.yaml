@@ -13,3 +13,5 @@ paths:
     $ref: './api/exchange-rate.yaml'
   /api/v1/currency-conversion:
     $ref: './api/currency-convert.yaml'
+  /api/v1/currency-conversion-history:
+    $ref: './api/currency-convert-history.yaml'

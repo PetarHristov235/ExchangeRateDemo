@@ -1,0 +1,20 @@
+PageCurrencyConvertHistoryResponseDTO:
+  type: object
+  properties:
+    content:
+      type: array
+      items:
+        $ref: "./currencyConvertResponseDTO.yaml#/CurrencyConvertResponseDTO"
+    pageCount:
+      type: integer
+      description: Page number (zero-based)
+    pageSize:
+      type: integer
+      description: Number of items per page
+    totalElements:
+      type: integer
+      format: int64
+      description: Total number of elements
+    totalPages:
+      type: integer
+      description: Total number of pages

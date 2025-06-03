@@ -1,0 +1,47 @@
+get:
+  tags:
+    - currencyConversion
+  summary: Returns the currency conversion history
+  operationId: currencyConvertHistory
+  parameters:
+    - name: transactionId
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Unique identifier for the transaction (e.g., UUID)
+    - name: transactionDateFrom
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+      description: Timestamp of the conversion rate as an ISO-8601 local date-time
+    - name: transactionDateTo
+      in: query
+      required: false
+      schema:
+          type: string
+          format: date-time
+      description: Timestamp of the conversion rate as an ISO-8601 local date-time
+    - name: pageCount
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 0
+      description: Page number (zero-based)
+    - name: pageSize
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 20
+      description: Page size
+  responses:
+    '200':
+      description: Successfully retrieved conversion result
+      content:
+        application/json:
+          schema:
+            $ref: '../model/currencyConvertHistoryResponseDTO.yaml#/PageCurrencyConvertHistoryResponseDTO'
