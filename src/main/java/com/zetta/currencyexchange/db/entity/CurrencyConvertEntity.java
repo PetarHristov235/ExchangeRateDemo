@@ -41,9 +41,4 @@ public class CurrencyConvertEntity {
     @TimeZoneStorage(value = TimeZoneStorageType.NORMALIZE_UTC)
     @Column(name = "created_at", updatable = false, nullable = false)
     private OffsetDateTime createdAt;
-
-//    @PrePersist
-//    public void onCreate() {
-//        createdAt = OffsetDateTime.now();
-//    }
 }

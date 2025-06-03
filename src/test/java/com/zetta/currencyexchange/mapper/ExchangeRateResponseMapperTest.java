@@ -1,4 +1,3 @@
-// src/test/java/com/zetta/currencyexchange/mapper/ExchangeRateResponseMapperTest.java
 package com.zetta.currencyexchange.mapper;
 
 import com.zetta.currencyexchange.model.ExchangeRateResponse;

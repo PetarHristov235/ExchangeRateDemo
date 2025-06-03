@@ -11,7 +11,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CurrencyConvertMapperImplTest {
+class CurrencyConvertMapperImplTest {
 
     private final CurrencyConvertMapper mapper = Mappers.getMapper(CurrencyConvertMapper.class);
 

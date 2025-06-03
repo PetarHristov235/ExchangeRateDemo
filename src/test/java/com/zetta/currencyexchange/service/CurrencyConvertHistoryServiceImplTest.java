@@ -48,7 +48,7 @@ class CurrencyConvertHistoryServiceImplTest {
         CurrencyConvertEntity entity = new CurrencyConvertEntity();
         CurrencyConvertResponseDTO dto = new CurrencyConvertResponseDTO();
         List<CurrencyConvertEntity> entities = List.of(entity);
-        List<CurrencyConvertResponseDTO> dtos = List.of(dto);
+        List<CurrencyConvertResponseDTO> dtoList = List.of(dto);
 
         Page<CurrencyConvertEntity> page = new PageImpl<>(entities, PageRequest.of(pageCount,
                 pageSize), 6);
@@ -62,7 +62,7 @@ class CurrencyConvertHistoryServiceImplTest {
         verify(repository).findCurrencyConvertHistory(any(), eq(from), eq(to), any());
         verify(mapper).toDto(entity);
 
-        assertEquals(dtos, result.getContent());
+        assertEquals(dtoList, result.getContent());
         assertEquals(pageCount, result.getPageCount());
         assertEquals(pageSize, result.getPageSize());
         assertEquals(page.getTotalElements(), result.getTotalElements());

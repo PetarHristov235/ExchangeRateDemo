@@ -1,18 +1,18 @@
-package com.zetta.currencyexchange.rest.delegate;
+package com.zetta.currencyexchange.rest;
 
 import com.zetta.currencyexchange.model.CurrencyConvertRequestDTO;
 import com.zetta.currencyexchange.model.CurrencyConvertResponseDTO;
 import com.zetta.currencyexchange.model.PageCurrencyConvertHistoryResponseDTO;
+import com.zetta.currencyexchange.rest.delegate.CurrencyConvertApiDelegateImpl;
 import com.zetta.currencyexchange.service.CurrencyConvertHistoryService;
 import com.zetta.currencyexchange.service.CurrencyConvertService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
 
 import java.time.OffsetDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 class CurrencyConvertApiDelegateImplTest {
