@@ -2,7 +2,7 @@ get:
   tags:
     - currencyConversion
   summary: Endpoint for retrieving currency conversion rates
-  operationId: currencyConversion
+  operationId: currencyConvert
   parameters:
     - name: fromCurrency
       in: query
@@ -21,7 +21,7 @@ get:
       required: false
       schema:
         type: number
-        format: double
+        format: decimal
         default: 1
       description: Amount to convert (optional, defaults to 1 if not provided)
   responses:

@@ -2,9 +2,9 @@ CurrencyConversionRateDTO:
   type: object
   properties:
     timestamp:
-      type: integer
-      format: int64
-      description: Timestamp of the conversion rate in milliseconds since epoch
+      type: string
+      format: date-time
+      description: Timestamp of the conversion rate as an ISO-8601 local date-time
     source:
       type: string
       description: Currency code of the source currency (e.g., USD)
