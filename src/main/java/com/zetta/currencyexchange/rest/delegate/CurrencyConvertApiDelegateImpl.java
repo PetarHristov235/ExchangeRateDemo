@@ -1,15 +1,14 @@
 package com.zetta.currencyexchange.rest.delegate;
 
 import com.zetta.currencyexchange.api.CurrencyConversionApiDelegate;
-import com.zetta.currencyexchange.model.CurrencyConversionRateDTO;
+import com.zetta.currencyexchange.model.CurrencyConvertRequestDTO;
+import com.zetta.currencyexchange.model.CurrencyConvertResponseDTO;
 import com.zetta.currencyexchange.service.CurrencyConvertService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-
-import java.math.BigDecimal;
 
 @Component
 @RequiredArgsConstructor
@@ -19,9 +18,7 @@ public class CurrencyConvertApiDelegateImpl implements CurrencyConversionApiDele
     CurrencyConvertService currencyConvertService;
 
     @Override
-    public ResponseEntity<CurrencyConversionRateDTO> currencyConvert(String fromCurrency,
-                                                                     String toCurrency,
-                                                                     BigDecimal amount) {
-        return ResponseEntity.ok(currencyConvertService.convert(fromCurrency, toCurrency, amount));
+    public ResponseEntity<CurrencyConvertResponseDTO> currencyConvert(CurrencyConvertRequestDTO requestDTO) {
+        return ResponseEntity.ok(currencyConvertService.convert(requestDTO));
     }
 }

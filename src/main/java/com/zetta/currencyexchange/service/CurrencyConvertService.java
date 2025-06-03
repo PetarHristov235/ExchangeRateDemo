@@ -1,9 +1,10 @@
 package com.zetta.currencyexchange.service;
 
-import com.zetta.currencyexchange.model.CurrencyConversionRateDTO;
+import com.zetta.currencyexchange.model.CurrencyConvertRequestDTO;
+import com.zetta.currencyexchange.model.CurrencyConvertResponseDTO;
 
 import java.math.BigDecimal;
 
 public interface CurrencyConvertService {
-    CurrencyConversionRateDTO convert(String fromCurrency, String toCurrency, BigDecimal amount);
+    CurrencyConvertResponseDTO convert(CurrencyConvertRequestDTO requestDTO);
 }

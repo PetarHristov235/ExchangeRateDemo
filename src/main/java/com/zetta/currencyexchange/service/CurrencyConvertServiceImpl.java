@@ -3,7 +3,8 @@ package com.zetta.currencyexchange.service;
 import com.zetta.currencyexchange.db.entity.CurrencyConvertEntity;
 import com.zetta.currencyexchange.db.repository.CurrencyConvertRepository;
 import com.zetta.currencyexchange.mapper.CurrencyConvertMapper;
-import com.zetta.currencyexchange.model.CurrencyConversionRateDTO;
+import com.zetta.currencyexchange.model.CurrencyConvertRequestDTO;
+import com.zetta.currencyexchange.model.CurrencyConvertResponseDTO;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -22,16 +23,19 @@ public class CurrencyConvertServiceImpl implements CurrencyConvertService {
     CurrencyConvertMapper currencyConvertMapper;
 
     @Override
-    public CurrencyConversionRateDTO convert(String fromCurrency, String toCurrency, BigDecimal amount) {
-        BigDecimal conversionAmount = Optional.ofNullable(amount).orElse(BigDecimal.ONE);
+    public CurrencyConvertResponseDTO convert(CurrencyConvertRequestDTO requestDTO) {
+        BigDecimal conversionAmount =
+                Optional.ofNullable(requestDTO.getAmount()).orElse(BigDecimal.ONE);
         BigDecimal exchangeRate =
-                Optional.ofNullable(exchangeRateService.exchangeRates(fromCurrency, toCurrency).getExchangeRate())
-                .orElseThrow(() -> new IllegalArgumentException(
-                        String.format("Exchange rate not found for %s to %s", fromCurrency, toCurrency)));
+                Optional.ofNullable(exchangeRateService.exchangeRates(requestDTO.getFromCurrency(),
+                                requestDTO.getToCurrency()).getExchangeRate())
+                        .orElseThrow(() -> new IllegalArgumentException(
+                                String.format("Exchange rate not found for %s to %s",
+                                        requestDTO.getFromCurrency(), requestDTO.getToCurrency())));
 
         BigDecimal convertedAmount = exchangeRate.multiply(conversionAmount);
 
-        CurrencyConvertEntity entity = buildCurrencyConvertEntity(fromCurrency, toCurrency, exchangeRate,
+        CurrencyConvertEntity entity = buildCurrencyConvertEntity(requestDTO.getFromCurrency(), requestDTO.getToCurrency(), exchangeRate,
                 convertedAmount);
         CurrencyConvertEntity savedEntity = currencyConvertRepository.save(entity);
 

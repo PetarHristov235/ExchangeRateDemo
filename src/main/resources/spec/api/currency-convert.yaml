@@ -1,33 +1,18 @@
-get:
+post:
   tags:
     - currencyConversion
   summary: Endpoint for retrieving currency conversion rates
   operationId: currencyConvert
-  parameters:
-    - name: fromCurrency
-      in: query
-      required: true
-      schema:
-        type: string
-      description: Source currency code (e.g., USD)
-    - name: toCurrency
-      in: query
-      required: true
-      schema:
-        type: string
-      description: Target currency code (e.g., EUR)
-    - name: amount
-      in: query
-      required: false
-      schema:
-        type: number
-        format: decimal
-        default: 1
-      description: Amount to convert (optional, defaults to 1 if not provided)
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../model/currencyConvertRequestDTO.yaml#/CurrencyConvertRequestDTO"
   responses:
     '200':
-      description: Successfully exchange rates
+      description: Successfully retrieved conversion result
       content:
         application/json:
           schema:
-            $ref: "../model/currencyConversionRateDTO.yaml#/CurrencyConversionRateDTO"
+            $ref: "../model/currencyConvertResponseDTO.yaml#/CurrencyConvertResponseDTO"
