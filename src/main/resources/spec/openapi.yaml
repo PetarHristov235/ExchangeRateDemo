@@ -6,6 +6,10 @@ info:
 tags:
   - name: exchangeRate
     description: Endpoints for retrieving current exchange rates
+  - name: currencyConversion
+    description: Endpoints for currency conversion rates
 paths:
   /api/v1/exchange-rate:
     $ref: './api/exchange-rate.yaml'
+  /api/v1/currency-conversion:
+    $ref: './api/currency-conversion.yaml'
