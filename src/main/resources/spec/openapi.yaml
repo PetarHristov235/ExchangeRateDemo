@@ -12,4 +12,4 @@ paths:
   /api/v1/exchange-rate:
     $ref: './api/exchange-rate.yaml'
   /api/v1/currency-conversion:
-    $ref: './api/currency-conversion.yaml'
+    $ref: './api/currency-convert.yaml'

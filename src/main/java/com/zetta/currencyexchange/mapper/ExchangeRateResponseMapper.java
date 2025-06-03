@@ -15,6 +15,6 @@ public interface ExchangeRateResponseMapper {
 
     default BigDecimal getExchangeRate(ExchangeRateResponse response, String from, String to) {
         if (response == null || response.getQuotes() == null) return null;
-        return response.getQuotes().get(from.concat(to));
+        return response.getQuotes().get(from.toUpperCase().concat(to.toUpperCase()));
     }
 }
