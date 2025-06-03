@@ -1,0 +1,20 @@
+CurrencyConversionRateDTO:
+  type: object
+  properties:
+    timestamp:
+      type: integer
+      format: int64
+      description: Timestamp of the conversion rate in milliseconds since epoch
+    source:
+      type: string
+      description: Currency code of the source currency (e.g., USD)
+    target:
+      type: string
+      description: Currency code of the source currency (e.g., USD)
+    amount:
+      type: number
+      format: decimal
+      description: Amount after conversion based on the exchange rate
+    transactionId:
+      type: string
+      description: Unique identifier for the transaction
