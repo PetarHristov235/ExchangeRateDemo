@@ -33,7 +33,7 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @EnableCaching
-class ExchangeRateServiceImplCacheTest {
+class ExchangeRateServiceImplTest {
 
     @TestConfiguration
     static class CacheTestConfig {

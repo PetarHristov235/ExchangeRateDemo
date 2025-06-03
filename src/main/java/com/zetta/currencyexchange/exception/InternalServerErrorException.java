@@ -10,8 +10,4 @@ public class InternalServerErrorException extends RuntimeException {
         super(message);
         this.errorCode = errorCode;
     }
-
-    public InternalServerErrorException(String message) {
-        super(message);
-    }
 }
