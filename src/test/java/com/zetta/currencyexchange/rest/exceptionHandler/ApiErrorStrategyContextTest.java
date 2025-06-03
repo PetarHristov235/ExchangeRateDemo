@@ -56,6 +56,18 @@ class ApiErrorStrategyContextTest {
     }
 
     @Test
+    void testHandleErrorFor103() {
+        // Act & Assert
+        int expectedCode = 103;
+        InternalServerErrorException noContentException = assertThrows(InternalServerErrorException.class,
+                () -> ApiErrorStrategyContext.handleError(expectedCode, "https://test-api.com"));
+
+        assertEquals(RestApiErrorEnum.IE_124.getDescription(), noContentException.getMessage());
+        assertEquals(expectedCode, noContentException.getErrorCode());
+    }
+
+
+    @Test
     void testHandleErrorForInvalidSourceCurrency() {
         // Act & Assert
         int expectedCode = 201;

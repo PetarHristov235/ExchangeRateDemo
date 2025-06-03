@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
@@ -65,8 +66,9 @@ class ExchangeRateServiceImplTest {
         ReflectionTestUtils.setField(exchangeRateService, "accessKey", ACCESS_KEY);
 
         cacheManager.getCacheNames().forEach(name -> {
-            if (cacheManager.getCache(name) != null) {
-                cacheManager.getCache(name).clear();
+            Cache cache = cacheManager.getCache(name);
+            if (cache != null) {
+                cache.clear();
             }
         });
     }

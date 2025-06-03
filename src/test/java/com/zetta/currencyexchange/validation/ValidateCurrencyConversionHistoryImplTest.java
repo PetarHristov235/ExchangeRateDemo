@@ -26,9 +26,15 @@ class ValidateCurrencyConversionHistoryImplTest {
     }
 
     @Test
-    void shouldNotThrowExceptionWhenTransactionIdIsPresent() {
+    void shouldThrowExceptionWhenTransactionIdIsInvalidUUID() {
+        assertThrows(BadRequestException.class, () ->
+                validator.validateRequest("123", null, null)); // invalid UUID
+    }
+
+    @Test
+    void shouldNotThrowExceptionWhenTransactionIdIsValidUUID() {
         assertDoesNotThrow(() ->
-                validator.validateRequest("123", null, null));
+                validator.validateRequest("550e8400-e29b-41d4-a716-446655440000", null, null));
     }
 
     @Test
