@@ -1,4 +1,4 @@
-CurrencyConversionRateDTO:
+CurrencyConvertResponseDTO:
   type: object
   properties:
     timestamp:

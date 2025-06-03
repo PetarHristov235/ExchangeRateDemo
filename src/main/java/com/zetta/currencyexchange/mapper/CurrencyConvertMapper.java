@@ -1,7 +1,7 @@
 package com.zetta.currencyexchange.mapper;
 
 import com.zetta.currencyexchange.db.entity.CurrencyConvertEntity;
-import com.zetta.currencyexchange.model.CurrencyConversionRateDTO;
+import com.zetta.currencyexchange.model.CurrencyConvertResponseDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -16,7 +16,7 @@ public interface CurrencyConvertMapper {
     @Mapping(source = "convertedAmount", target = "amount")
     @Mapping(source = "id", target = "transactionId", qualifiedByName = "uuidToString")
     @Mapping(source = "createdAt", target = "timestamp")
-    CurrencyConversionRateDTO toDto(CurrencyConvertEntity entity);
+    CurrencyConvertResponseDTO toDto(CurrencyConvertEntity entity);
 
     @Named("uuidToString")
     static String uuidToString(UUID uuid) {

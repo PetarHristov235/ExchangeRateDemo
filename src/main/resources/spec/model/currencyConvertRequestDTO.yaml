@@ -1,0 +1,20 @@
+CurrencyConvertRequestDTO:
+  type: object
+  required:
+    - fromCurrency
+    - toCurrency
+  properties:
+    fromCurrency:
+      type: string
+      example: USD
+      description: Source currency code
+    toCurrency:
+      type: string
+      example: EUR
+      description: Target currency code
+    amount:
+      type: number
+      format: decimal
+      default: 1
+      example: 100.00
+      description: Amount to convert (defaults to 1 if not provided)
