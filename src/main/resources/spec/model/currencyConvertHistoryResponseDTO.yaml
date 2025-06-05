@@ -8,13 +8,17 @@ PageCurrencyConvertHistoryResponseDTO:
     pageCount:
       type: integer
       description: Page number (zero-based)
+      example: 0
     pageSize:
       type: integer
       description: Number of items per page
+      example: 20
     totalElements:
       type: integer
       format: int64
       description: Total number of elements
+      example: 42
     totalPages:
       type: integer
       description: Total number of pages
+      example: 3

@@ -4,10 +4,12 @@ import com.zetta.currencyexchange.enums.RestApiErrorEnum;
 import com.zetta.currencyexchange.exception.InternalServerErrorException;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+import static com.zetta.currencyexchange.enums.RestApiErrorEnum.GE_509;
+
 public class DefaultErrorStrategy implements ApiErrorStrategy {
     @Override
-    public void handle(int errorCode) {
-        throw new InternalServerErrorException(RestApiErrorEnum.IE_500.getDescription(), RestApiErrorEnum.IE_500.getCode());
+    public void handle() {
+        throw new InternalServerErrorException(GE_509.getDescription(),
+            GE_509.name());
     }
 }

@@ -4,10 +4,19 @@ ExchangeRateResponseDTO:
     timestamp:
       type: integer
       format: int64
+      description: Unix timestamp (seconds since epoch) when the exchange rate was retrieved
     source:
       type: string
+      description: Currency code of the source currency (e.g., USD)
     target:
       type: string
+      description: Currency code of the target currency (e.g., EUR)
     exchangeRate:
       type: number
       format: decimal
+      description: The exchange rate from source to target currency
+  example:
+    timestamp: 1718025296
+    source: "USD"
+    target: "EUR"
+    exchangeRate: 0.925

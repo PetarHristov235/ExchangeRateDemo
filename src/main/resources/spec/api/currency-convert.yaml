@@ -16,3 +16,33 @@ post:
         application/json:
           schema:
             $ref: "../model/currencyConvertResponseDTO.yaml#/CurrencyConvertResponseDTO"
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: "../model/applicationApiException.yaml#/ApplicationApiException"
+    '405':
+      description: Method Not Allowed
+      content:
+        application/json:
+          schema:
+            $ref: "../model/applicationApiException.yaml#/ApplicationApiException"
+    '415':
+      description: Unsupported Media Type
+      content:
+        application/json:
+          schema:
+            $ref: "../model/applicationApiException.yaml#/ApplicationApiException"
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: "../model/applicationApiException.yaml#/ApplicationApiException"
+    '204':
+      description: No Content
+      content:
+        application/json:
+          schema:
+            $ref: "../model/applicationApiException.yaml#/ApplicationApiException"

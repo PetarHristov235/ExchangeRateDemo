@@ -9,6 +9,7 @@ get:
       required: false
       schema:
         type: string
+        example: ""
       description: Unique identifier for the transaction (e.g., UUID)
     - name: transactionDateFrom
       in: query
@@ -16,20 +17,25 @@ get:
       schema:
         type: string
         format: date-time
-      description: Timestamp of the conversion rate as an ISO-8601 local date-time
+        default: "2024-06-01T00:00:00"
+        example: "2024-06-01T00:00:00"
+      description: Start of the transaction date range as an ISO-8601 local date-time
     - name: transactionDateTo
       in: query
       required: false
       schema:
-          type: string
-          format: date-time
-      description: Timestamp of the conversion rate as an ISO-8601 local date-time
+        type: string
+        format: date-time
+        default: "2026-06-10T23:59:59"
+        example: "2026-06-10T23:59:59"
+      description: End of the transaction date range as an ISO-8601 local date-time
     - name: pageCount
       in: query
       required: false
       schema:
         type: integer
         default: 0
+        example: 0
       description: Page number (zero-based)
     - name: pageSize
       in: query
@@ -37,7 +43,8 @@ get:
       schema:
         type: integer
         default: 20
-      description: Page size
+        example: 20
+      description: Page size if it
   responses:
     '200':
       description: Successfully retrieved conversion result
@@ -45,3 +52,33 @@ get:
         application/json:
           schema:
             $ref: '../model/currencyConvertHistoryResponseDTO.yaml#/PageCurrencyConvertHistoryResponseDTO'
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: "../model/applicationApiException.yaml#/ApplicationApiException"
+    '405':
+      description: Method Not Allowed
+      content:
+        application/json:
+          schema:
+            $ref: "../model/applicationApiException.yaml#/ApplicationApiException"
+    '415':
+      description: Unsupported Media Type
+      content:
+        application/json:
+          schema:
+            $ref: "../model/applicationApiException.yaml#/ApplicationApiException"
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: "../model/applicationApiException.yaml#/ApplicationApiException"
+    '204':
+      description: No Content
+      content:
+        application/json:
+          schema:
+            $ref: "../model/applicationApiException.yaml#/ApplicationApiException"

@@ -38,7 +38,7 @@ class ExchangeRateApiDelegateTest {
 
         ResponseEntity<ExchangeRateResponseDTO> response = exchangeRateApiDelegate.exchangeRate(from, to);
 
-        assertThat(response.getStatusCodeValue()).isEqualTo(200);
+        assertThat(response.getStatusCode().value()).isEqualTo(200);
         assertThat(response.getBody()).isEqualTo(dto);
     }
 }

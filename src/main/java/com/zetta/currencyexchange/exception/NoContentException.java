@@ -7,9 +7,9 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class NoContentException extends RuntimeException {
-    private int errorCode;
+    private String errorCode;
 
-    public NoContentException(String message, int errorCode) {
+    public NoContentException(String message, String errorCode) {
         super(message);
         this.errorCode = errorCode;
     }

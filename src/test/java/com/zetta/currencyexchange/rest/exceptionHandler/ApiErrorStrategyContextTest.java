@@ -1,11 +1,12 @@
 package com.zetta.currencyexchange.rest.exceptionHandler;
 
-import com.zetta.currencyexchange.enums.RestApiErrorEnum;
 import com.zetta.currencyexchange.exception.BadRequestException;
 import com.zetta.currencyexchange.exception.InternalServerErrorException;
 import com.zetta.currencyexchange.exception.NoContentException;
+import com.zetta.currencyexchange.util.ApiErrorStrategyContext;
 import org.junit.jupiter.api.Test;
 
+import static com.zetta.currencyexchange.enums.RestApiErrorEnum.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -13,72 +14,72 @@ class ApiErrorStrategyContextTest {
 
     @Test
     void testHandleErrorFor101() {
-        int expectedCode = 101;
+        int errorCode = 101;
         // Act & Assert
         InternalServerErrorException internalServerErrorException = assertThrows(InternalServerErrorException.class,
-                () -> ApiErrorStrategyContext.handleError(expectedCode, "https://test-api.com"));
+                () -> ApiErrorStrategyContext.handleError(errorCode, "https://test-api.com"));
 
-        assertEquals(RestApiErrorEnum.ER_500.getDescription(), internalServerErrorException.getMessage());
-        assertEquals(expectedCode, internalServerErrorException.getErrorCode());
+        assertEquals(ER_500.getDescription(), internalServerErrorException.getMessage());
+        assertEquals(ER_500.name(), internalServerErrorException.getErrorCode());
     }
 
     @Test
     void testHandleErrorFor102() {
         // Act & Assert
-        int expectedCode = 102;
+        int errorCode = 102;
         InternalServerErrorException internalServerErrorException = assertThrows(InternalServerErrorException.class,
-                () -> ApiErrorStrategyContext.handleError(expectedCode, "https://test-api.com"));
+                () -> ApiErrorStrategyContext.handleError(errorCode, "https://test-api.com"));
 
-        assertEquals(RestApiErrorEnum.ER_500.getDescription(), internalServerErrorException.getMessage());
-        assertEquals(expectedCode, internalServerErrorException.getErrorCode());
+        assertEquals(ER_500.getDescription(), internalServerErrorException.getMessage());
+        assertEquals(ER_500.name(), internalServerErrorException.getErrorCode());
     }
 
     @Test
     void testHandleErrorFor104() {
         // Act & Assert
-        int expectedCode = 105;
+        int errorCode = 105;
         InternalServerErrorException internalServerErrorException = assertThrows(InternalServerErrorException.class,
-                () -> ApiErrorStrategyContext.handleError(expectedCode, "https://test-api.com"));
+                () -> ApiErrorStrategyContext.handleError(errorCode, "https://test-api.com"));
 
-        assertEquals(RestApiErrorEnum.ER_500.getDescription(), internalServerErrorException.getMessage());
-        assertEquals(expectedCode, internalServerErrorException.getErrorCode());
+        assertEquals(ER_500.getDescription(), internalServerErrorException.getMessage());
+        assertEquals(ER_500.name(), internalServerErrorException.getErrorCode());
     }
 
     @Test
     void testHandleErrorFor106() {
         // Act & Assert
-        int expectedCode = 106;
+        int errorCode = 106;
         NoContentException noContentException = assertThrows(NoContentException.class,
-                () -> ApiErrorStrategyContext.handleError(expectedCode, "https://test-api.com"));
+                () -> ApiErrorStrategyContext.handleError(errorCode, "https://test-api.com"));
 
-        assertEquals(RestApiErrorEnum.ER_204.getDescription(), noContentException.getMessage());
-        assertEquals(expectedCode, noContentException.getErrorCode());
+        assertEquals(ER_204.getDescription(), noContentException.getMessage());
+        assertEquals(ER_204.name(), noContentException.getErrorCode());
     }
 
     @Test
     void testHandleErrorFor103() {
         // Act & Assert
-        int expectedCode = 103;
+        int errorCode = 103;
         InternalServerErrorException noContentException = assertThrows(InternalServerErrorException.class,
-                () -> ApiErrorStrategyContext.handleError(expectedCode, "https://test-api.com"));
+                () -> ApiErrorStrategyContext.handleError(errorCode, "https://test-api.com"));
 
-        assertEquals(RestApiErrorEnum.IE_124.getDescription(), noContentException.getMessage());
-        assertEquals(expectedCode, noContentException.getErrorCode());
+        assertEquals(ER_124.getDescription(), noContentException.getMessage());
+        assertEquals(ER_124.name(), noContentException.getErrorCode());
     }
 
 
     @Test
     void testHandleErrorForInvalidSourceCurrency() {
         // Act & Assert
-        int expectedCode = 201;
+        int errorCode = 201;
         BadRequestException badRequestException = assertThrows(BadRequestException.class,
-                () -> ApiErrorStrategyContext.handleError(expectedCode,
+                () -> ApiErrorStrategyContext.handleError(errorCode,
                         "https" +
                                 "://test-api.com"));
 
-        assertEquals(RestApiErrorEnum.ER_312.getDescription(),
+        assertEquals(ER_312.getDescription(),
                 badRequestException.getMessage());
-        assertEquals(expectedCode,
+        assertEquals(ER_312.name(),
                 badRequestException.getErrorCode());
     }
 
@@ -86,15 +87,15 @@ class ApiErrorStrategyContextTest {
     @Test
     void testHandleErrorForInvalidCurrencyCodes() {
         // Act & Assert
-        int expectedCode = 202;
+        int errorCode = 202;
         BadRequestException badRequestException = assertThrows(BadRequestException.class,
-                () -> ApiErrorStrategyContext.handleError(expectedCode,
+                () -> ApiErrorStrategyContext.handleError(errorCode,
                         "https" +
                                 "://test-api.com"));
 
-        assertEquals(RestApiErrorEnum.ER_313.getDescription(),
+        assertEquals(ER_313.getDescription(),
                 badRequestException.getMessage());
-        assertEquals(expectedCode,
+        assertEquals(ER_313.name(),
                 badRequestException.getErrorCode());
     }
 
@@ -102,13 +103,14 @@ class ApiErrorStrategyContextTest {
     void testHandleErrorForInvalidCode() {
 
         // Act & Assert
+        int errorCode = 124;
         InternalServerErrorException internalServerErrorException = assertThrows(InternalServerErrorException.class,
-                () -> ApiErrorStrategyContext.handleError(RestApiErrorEnum.IE_124.getCode(), "https" +
+                () -> ApiErrorStrategyContext.handleError(errorCode, "https" +
                         "://test-api.com"));
 
-        assertEquals(RestApiErrorEnum.IE_500.getDescription(),
+        assertEquals(GE_509.getDescription(),
                 internalServerErrorException.getMessage());
-        assertEquals(RestApiErrorEnum.IE_500.getCode(),
+        assertEquals(GE_509.name(),
                 internalServerErrorException.getErrorCode());
     }
 }
