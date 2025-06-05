@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.util.HashMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,6 +23,7 @@ class ExchangeRateResponseMapperTest {
         HashMap<String, BigDecimal> quotes = new HashMap<>();
         quotes.put("EURUSD", new BigDecimal("1.2345"));
         response.setQuotes(quotes);
+        response.setTimestamp(Instant.parse("2024-06-10T12:00:00Z"));
 
         String from = "EUR";
         String to = "USD";
@@ -29,6 +33,7 @@ class ExchangeRateResponseMapperTest {
         assertThat(dto).isNotNull();
         assertThat(dto.getTarget()).isEqualTo("USD");
         assertThat(dto.getExchangeRate()).isEqualByComparingTo("1.2345");
+        assertThat(dto.getTimestamp()).isEqualTo(OffsetDateTime.ofInstant(response.getTimestamp(), ZoneId.systemDefault()));
     }
 
     @Test

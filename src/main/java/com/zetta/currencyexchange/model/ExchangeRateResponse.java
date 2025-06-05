@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.Map;
 
 @Data
@@ -11,7 +12,7 @@ import java.util.Map;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ExchangeRateResponse {
     boolean success;
-    long timestamp;
+    Instant timestamp;
     String source;
     Map<String, BigDecimal> quotes;
     Error error;

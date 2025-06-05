@@ -3,6 +3,7 @@ package com.zetta.currencyexchange.model;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.time.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,12 +18,12 @@ class ExchangeRateResponseTest {
 
         ExchangeRateResponse response = new ExchangeRateResponse();
         response.setSuccess(true);
-        response.setTimestamp(1621234567L);
+        response.setTimestamp(OffsetDateTime.of(LocalDateTime.of(2021, 5, 17, 12, 0), ZoneOffset.UTC).toInstant());
         response.setSource("USD");
         response.setQuotes(quotes);
 
         assertThat(response.isSuccess()).isTrue();
-        assertThat(response.getTimestamp()).isEqualTo(1621234567L);
+        assertThat(response.getTimestamp()).isEqualTo(OffsetDateTime.of(LocalDate.of(2021, 5, 17), LocalTime.of(12, 0), ZoneOffset.UTC).toInstant());
         assertThat(response.getSource()).isEqualTo("USD");
         assertThat(response.getQuotes()).isNotNull();
         assertThat(response.getQuotes()).containsEntry("USDGBP", new BigDecimal("0.79"));
@@ -49,13 +50,13 @@ class ExchangeRateResponseTest {
 
         ExchangeRateResponse r1 = new ExchangeRateResponse();
         r1.setSuccess(true);
-        r1.setTimestamp(1234567890L);
+        r1.setTimestamp(OffsetDateTime.of(LocalDateTime.of(2021, 5, 17, 12, 0), ZoneOffset.UTC).toInstant());
         r1.setSource("USD");
         r1.setQuotes(quotes);
 
         ExchangeRateResponse r2 = new ExchangeRateResponse();
         r2.setSuccess(true);
-        r2.setTimestamp(1234567890L);
+        r2.setTimestamp(OffsetDateTime.of(LocalDateTime.of(2021, 5, 17, 12, 0), ZoneOffset.UTC).toInstant());
         r2.setSource("USD");
         r2.setQuotes(quotes);
 
