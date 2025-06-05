@@ -6,7 +6,7 @@ import static com.zetta.currencyexchange.enums.RestApiErrorEnum.ER_312;
 
 public class ApiInvalidSourceCurrencyErrorStrategy implements ApiErrorStrategy {
     @Override
-    public void handle(int errorCode) {
-        throw new BadRequestException(ER_312.getDescription(), errorCode);
+    public void handle() {
+        throw new BadRequestException(ER_312.getDescription(), ER_312.name());
     }
 }

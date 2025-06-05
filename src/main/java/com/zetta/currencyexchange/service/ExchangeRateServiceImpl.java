@@ -4,7 +4,7 @@ import com.zetta.currencyexchange.exception.InternalServerErrorException;
 import com.zetta.currencyexchange.mapper.ExchangeRateResponseMapper;
 import com.zetta.currencyexchange.model.ExchangeRateResponse;
 import com.zetta.currencyexchange.model.ExchangeRateResponseDTO;
-import com.zetta.currencyexchange.rest.exceptionHandler.ApiErrorStrategyContext;
+import com.zetta.currencyexchange.util.ApiErrorStrategyContext;
 import com.zetta.currencyexchange.util.UriCreateUtil;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -57,7 +57,8 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
         } catch (RestClientException ex) {
             log.error("An RestClientException was thrown during fetching the exchange rates with:" +
                     "{}", ex.getMessage());
-            throw new InternalServerErrorException(ER_500.getDescription(), ER_500.getCode());
+
+            throw new InternalServerErrorException(ER_500.getDescription(), ER_500.name());
         }
 
         if (exchangeRateResponseEntity.getBody() != null &&
@@ -66,7 +67,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
             ExchangeRateResponse.Error error = exchangeRateResponseEntity.getBody().getError();
             log.error("An error occurred when fetching the exchange rates with error code {} and description {}",
                     error.getCode(), error.getInfo());
-            ApiErrorStrategyContext.handleError(error.getCode(), exchangeRateUrl);
+            ApiErrorStrategyContext.handleError(error.getCode(), exchangeUri.toString());
         }
 
         return exchangeRateResponseMapper.toDto(exchangeRateResponseEntity.getBody(), from, to);

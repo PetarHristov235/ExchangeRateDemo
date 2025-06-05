@@ -18,3 +18,9 @@ CurrencyConvertResponseDTO:
     transactionId:
       type: string
       description: Unique identifier for the transaction
+  example:
+    timestamp: "2024-06-10T12:34:56"
+    source: "USD"
+    target: "EUR"
+    amount: 92.50
+    transactionId: "abc123"

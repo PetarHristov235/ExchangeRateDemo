@@ -159,7 +159,7 @@ class ExchangeRateServiceImplTest {
 
             assertThatThrownBy(() -> exchangeRateService.exchangeRates(from, to))
                     .isInstanceOf(InternalServerErrorException.class)
-                    .hasMessage(RestApiErrorEnum.IE_500.getDescription());
+                    .hasMessage(RestApiErrorEnum.GE_509.getDescription());
         }
     }
 

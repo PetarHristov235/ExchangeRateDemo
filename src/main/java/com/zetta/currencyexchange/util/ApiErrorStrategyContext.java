@@ -1,6 +1,7 @@
-package com.zetta.currencyexchange.rest.exceptionHandler;
+package com.zetta.currencyexchange.util;
 
 import com.zetta.currencyexchange.rest.exceptionHandler.strategy.*;
+import lombok.experimental.FieldDefaults;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -9,8 +10,9 @@ import java.util.Map;
 
 @Slf4j
 @UtilityClass
+@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class ApiErrorStrategyContext {
-    private static final Map<Integer, ApiErrorStrategy> strategyMap = new HashMap<>();
+    Map<Integer, ApiErrorStrategy> strategyMap = new HashMap<>();
 
     static {
 //        Authorization errors
@@ -34,6 +36,6 @@ public class ApiErrorStrategyContext {
         log.error("Failed to invoke external endpoint [{}] with error code [{}].", urlInvoked, errorCode);
         ApiErrorStrategy strategy = strategyMap.getOrDefault(errorCode,
                 new DefaultErrorStrategy());
-        strategy.handle(errorCode);
+        strategy.handle();
     }
 }

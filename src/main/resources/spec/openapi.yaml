@@ -1,13 +1,23 @@
 openapi: 3.0.3
 info:
-  title: Title
-  description: Title
+  title: Currency Exchange API
+  description: |
+    This API provides endpoints for retrieving real-time currency exchange rates, performing currency conversions, and accessing historical conversion data.  
+    It is designed for financial applications, reporting tools, and any service that requires up-to-date or historical currency information.
   version: 1.0.0
 tags:
   - name: exchangeRate
-    description: Endpoints for retrieving current exchange rates
+    description: |
+      Endpoints for retrieving the latest exchange rates between supported currencies.  
+      Useful for displaying current rates or calculating conversions in real time.
   - name: currencyConversion
-    description: Endpoints for currency conversion rates
+    description: |
+      Endpoints for converting amounts between currencies using the latest available rates.  
+      Supports specifying source and target currencies and the amount to convert.
+  - name: currencyConversionHistory
+    description: |
+      Endpoints for retrieving historical records of currency conversion transactions.  
+      Useful for auditing, reporting, or displaying a user's conversion history.
 paths:
   /api/v1/exchange-rate:
     $ref: './api/exchange-rate.yaml'

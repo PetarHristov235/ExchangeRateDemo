@@ -6,9 +6,9 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class InternalServerErrorException extends RuntimeException {
-    int errorCode;
+    String errorCode;
 
-    public InternalServerErrorException(String message, int errorCode) {
+    public InternalServerErrorException(String message, String errorCode) {
         super(message);
         this.errorCode = errorCode;
     }

@@ -1,14 +1,13 @@
 package com.zetta.currencyexchange.rest.exceptionHandler.strategy;
 
-import com.zetta.currencyexchange.enums.RestApiErrorEnum;
 import com.zetta.currencyexchange.exception.InternalServerErrorException;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+import static com.zetta.currencyexchange.enums.RestApiErrorEnum.ER_500;
+
 public class ApiAuthorizationErrorStrategy implements ApiErrorStrategy {
     @Override
-    public void handle(int errorCode) {
-        throw new InternalServerErrorException(RestApiErrorEnum.ER_500.getDescription(),
-                errorCode);
+    public void handle() {
+        throw new InternalServerErrorException(ER_500.getDescription(),
+                ER_500.name());
     }
 }
