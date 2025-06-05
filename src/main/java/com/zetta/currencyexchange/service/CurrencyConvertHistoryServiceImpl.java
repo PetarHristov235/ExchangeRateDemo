@@ -47,6 +47,7 @@ public class CurrencyConvertHistoryServiceImpl implements CurrencyConvertHistory
         pageCurrencyConvertHistoryResponseDTO.setPageCount(currencyConvertHistoryPage.getNumber());
         pageCurrencyConvertHistoryResponseDTO.setPageSize(currencyConvertHistoryPage.getSize());
         pageCurrencyConvertHistoryResponseDTO.setTotalElements(currencyConvertHistoryPage.getTotalElements());
+        pageCurrencyConvertHistoryResponseDTO.setTotalPages(currencyConvertHistoryPage.getTotalPages());
         return pageCurrencyConvertHistoryResponseDTO;
     }
 }
