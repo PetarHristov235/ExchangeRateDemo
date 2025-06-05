@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -31,7 +32,7 @@ class ExchangeRateApiDelegateTest {
         ExchangeRateResponseDTO dto = new ExchangeRateResponseDTO();
         dto.setSource(from);
         dto.setTarget(to);
-        dto.setTimestamp(123456L);
+        dto.setTimestamp(OffsetDateTime.now());
         dto.setExchangeRate(BigDecimal.TEN);
 
         when(exchangeRateService.exchangeRates(from, to)).thenReturn(dto);
