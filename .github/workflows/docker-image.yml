@@ -20,9 +20,11 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Build Spring Boot app with Maven
-      run: mvn clean package -DskipTests
+    - name: Grant execute permission for gradlew
+      run: chmod +x ./gradlew
+
+    - name: Build Spring Boot app with Gradle
+      run: ./gradlew build -x test
 
     - name: Build Docker image
-      run: |
-        docker build -t my-springboot-app:latest .
+      run: docker build -t my-springboot-app:latest .
